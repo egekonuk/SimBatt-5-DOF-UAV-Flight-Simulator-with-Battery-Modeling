@@ -1,7 +1,7 @@
 <div align="center">
   <h1 align="center">SimBatt</h1>
   <p align="center">
-    A modular 5-DOF trajectory solver with advanced battery modeling for electric UAVs.
+    A modular 5-DOF trajectory solver with efficient battery modeling for electric UAVs.
     <br />
     <a href="https://github.com/egekonuk/SimBatt/issues">Report Bug</a>
     ·
