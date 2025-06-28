@@ -1,129 +1,88 @@
-SimBatt: 5-DOF UAV Flight Simulator with Battery Modeling
-SimBatt is a comprehensive 5-degree-of-freedom (5-DOF) flight performance simulator for electric unmanned aerial vehicles (UAVs), developed entirely in MATLAB. It features a detailed graphical user interface (GUI) built with MATLAB's App Designer, allowing for in-depth configuration of aircraft geometry, mission profiles, and power systems.
-
-The core of the simulator is its detailed physics-based models, including a full aerodynamic drag buildup, an adaptive Runge-Kutta-Fehlberg (RKF7(8)) solver for the equations of motion, and a sophisticated battery performance model based on Traub's collapsed-curves method.
-
-Key Features
-5-DOF Flight Dynamics: Simulates the aircraft's trajectory by solving for velocity, flight path angle, and heading.
-
-Detailed Aerodynamic Modeling: Implements a full drag buildup calculation, including parasite drag (fuselage friction, landing gear) and induced drag. The model is sensitive to the aircraft's configuration, such as deployed flaps or landing gear.
-
-Advanced Battery Performance: Simulates battery state of charge (SOC) and voltage drop under load using Traub's collapsed-curves method. Includes an option to integrate a custom Simulink battery model.
-
-Customizable Mission Profiling: An interactive table in the GUI allows users to define complex multi-segment flight plans, specifying the type of segment (straight or turn), its properties (distance or angle), and the exact RPM to be used for that segment.
-
-Adaptive High-Order Solver: Utilizes an adaptive Runge-Kutta-Fehlberg 7(8) solver to ensure numerical accuracy and stability throughout the simulation.
-
-Fully Interactive GUI: All aircraft parameters, mission profiles, and simulation settings are configured through a user-friendly, tabbed graphical interface. No code changes are needed to run a new simulation.
-
-Comprehensive Visualization: Generates 12 distinct plots to visualize every aspect of the flight, from the 3D trajectory to battery voltage, SOC, and aerodynamic performance.
-
-The SimBatt GUI
-The user interface is organized into four distinct tabs to manage the large number of input parameters logically.
-
-1. General & Dimensions Tab
-This tab is for defining the physical characteristics of the aircraft.
-
-Wing & Mass: Total mass, reference area, wingspan, chord, etc.
-
-Vertical Tail: Geometry of the vertical stabilizer.
-
-Horizontal Tail: Geometry of the horizontal stabilizer.
-
-Fuselage: Length, diameter, and wetted area.
-
-Landing Gear: Number of tires and their dimensions.
-
-2. Battery Tab
-This tab contains the specifications for the electric power source.
-
-Capacity (Ah)
-
-C-Rate
-
-Nominal Voltage
-
-Number of Cells in Series
-
-3. Simulation Tab
-This tab controls the initial state of the simulation and the behavior of the solver.
-
-Initial & Takeoff Conditions: Starting position, speed, heading, and takeoff-specific parameters like runway friction and slope.
-
-Flight Control: Defines autopilot-like parameters such as cruise altitude and bank rate.
-
-Solver Settings: Allows configuration of the time step and error tolerance for the RKF7(8) solver.
-
-4. Config & Mission Tab
-This tab is for high-level configuration and detailed mission planning.
-
-Propeller & Configuration: Propeller diameter and pitch, skin roughness, and flags for landing gear and flap deployment.
-
-Mission Profile: An interactive table to build a flight plan segment by segment. Users can add or delete segments and specify the type, target property (distance or turn angle), and RPM for each.
-
-Setup & Installation
+📖 Table of Contents
+About The Project
+Methodology
+Getting Started
+Usage
+Roadmap
+Contributing
+License
+Contact
+Acknowledgments
+✈️ About The Project
+SimBatt is a comprehensive MATLAB-based simulation tool for analyzing the flight trajectory of electric-powered Unmanned Aerial Vehicles (UAVs). It integrates a 5-degree-of-freedom (5-DOF) flight dynamics model with a detailed battery performance module, allowing for accurate mission profiling and endurance analysis.
+The simulation is built to be modular and user-friendly, with a GUI for parameter input and real-time visualization of the results. The current aircraft model is based on the Avistar ELITE RC plane, but the framework is adaptable for other fixed-wing electric aircraft.
+Key Features:
+5-DOF Flight Simulation: A robust framework for trajectory analysis, including takeoff, climb, cruise, turning, and landing phases.
+Advanced Battery Modeling: Utilizes a constant power discharge method that accurately reflects real-world flight conditions, validated against an experimental Simulink model.
+Modular Mission Planning: Define complex flight plans with multiple segments and control parameters.
+Detailed Aerodynamic Model: Incorporates a component-based drag buildup model, utilizing data from XFLR5 and the UIUC Propeller Database.
+Interactive GUI: Easily configure, run, and visualize simulations without deep-diving into the code.
+Built With:
+🔬 Methodology
+The simulation core is based on a set of well-established flight dynamics and power modeling principles.
+Flight Dynamics
+The 5-DOF model assumes coordinated flight (neglecting sideslip) and solves the following primary equations of motion using an adaptive Runge-Kutta-Fehlberg 7(8) solver.
+Velocity Derivative (V˙):
+V˙=m1​[Tcosα−D]−gsinγ
+Heading Angle Derivative (β˙​):
+β˙​=mV1​[Tsinα+L]cosγsinμ​
+Flight Path Angle Derivative (γ˙​):
+γ˙​=mV1​[Tsinα+L]cosμ−Vg​cosγ
+Takeoff Velocity Derivative:
+V˙=Wg​[T−D−ξ(Wcosγ−L)−Wsinγ]
+Where:
+T: Thrust, D: Drag, L: Lift, W: Weight
+α: Angle of Attack, γ: Flight Path Angle, μ: Bank Angle
+m: Mass, g: Gravity, ξ: Runway friction coefficient
+Battery Modeling
+The battery's State of Charge (SOC) and terminal voltage are estimated using a constant power discharge model inspired by the work of Lance Traub. This method is ideal for aircraft where power output remains relatively stable during cruise.
+Curve Collapse: Multiple constant-current discharge curves are "collapsed" into a single characteristic curve by finding an optimal exponent, n.
+InV=Constant
+Model Fitting: This collapsed curve is fitted to a rational polynomial function of SOC.
+VIn(SOC)=1+b⋅SOC+d⋅SOC2+f⋅SOC3a+c⋅SOC+e⋅SOC2​
+Iterative Solution: During simulation, the voltage, current, and SOC are solved iteratively at each time step based on the power required by the propulsion system.
+🚀 Getting Started
+To get a local copy up and running, follow these simple steps.
 Prerequisites
-MATLAB (Tested on R2025a).
+MATLAB (R2020a or newer is recommended)
+Simulink
+Required Toolboxes:
+Optimization Toolbox
+Simscape
+Installation
+Clone the repository:
+git clone https://github.com/your_username/SimBatt.git
 
-Curve Fitting Toolbox™: Required for the fit function used in aerodynamic and battery modeling.
 
-File Structure
-For the simulator to find all necessary data files, your project must be organized with the following folder structure. Place all .m files in the root project folder.
-
-/SimBatt_Project/
-|
-|-- FlightSimGUI.m
-|-- Takeoff.m
-|-- MissionMain.m
-|-- Dragpolar.m
-|-- Power.m
-|-- PropMotor.m
-|-- Rungeforth.m
-|-- Runge_Kutta_Fehlberg_7_8.m
-|-- traub_clps_battery.m
-|-- readpropdata.m
-|-- Aero3D.m
-|-- (and all other .m files)
-|
-|-- /Aero_Data/
-|   |-- CD0vsAOA.xlsx
-|   |-- CDIvsAOA.xlsx
-|   |-- CLvsAOA.xlsx
-|   +-- (all other aero data files)
-|
-|-- /RPMvsV/
-|   |-- RPM_V_1.mat
-|   |-- RPM_V_08.mat
-|   +-- (all other RPM data files)
-|
-|-- /Traub_Batt/
-|   |-- 6Sbatt_data_10A_mod.mat
-|   +-- (all other battery data files)
-|
-+-- /UIUC-propDB/
-    |-- apc_12x6_....txt
-    +-- (all your propeller performance .txt files)
-
-How to Run the Simulator
-Ensure your project follows the File Structure described above.
-
-Open MATLAB.
-
-In the MATLAB Command Window, navigate to the root of your project folder (e.g., cd C:\Your\Path\To\SimBatt_Project).
-
-Run the application by typing the following command and pressing Enter:
-
+Navigate to the project directory in MATLAB.
+🎮 Usage
+Open the project in MATLAB.
+Run the main GUI file:
 FlightSimGUI
 
-The GUI will launch, and you can configure your simulation.
 
-Using the Simulator
-Navigate through the tabs on the left panel to configure all aircraft, battery, and simulation parameters.
-
-Go to the Config & Mission tab to define your desired flight plan in the Mission Profile table. Use the "Add Segment" and "Delete Selected Segment" buttons to customize the mission.
-
-Click the Run Simulation button to start the simulation.
-
-View the results on the 12 plots on the right panel.
-
-If the simulation takes a long time or gets stuck, you can press the Exit Simulation button to stop it gracefully.
+The Simulation Parameters window will open. Use the tabs to configure the simulation:
+General & Dimensions: Set the aircraft's physical properties (mass, wing area, fuselage dimensions, etc.).
+Battery & Motor: Define the battery capacity, cell count, and motor characteristics.
+Simulation: Configure initial conditions, control parameters, and solver settings.
+Config & Mission: Select a propeller from the UIUC database, set flight configuration (gear, flaps), and define the mission profile in the table.
+Click the Run Simulation button to start.
+Results, including the 3D trajectory and various performance plots (SOC, Power, Voltage), will be displayed in the Simulation Results panel.
+🙌 Contributing
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Fork the Project
+Create your Feature Branch (git checkout -b feature/AmazingFeature)
+Commit your Changes (git commit -m 'Add some AmazingFeature')
+Push to the Branch (git push origin feature/AmazingFeature)
+Open a Pull Request
+📜 License
+Distributed under the MIT License. See LICENSE.txt for more information.
+📬 Contact
+Ege Konuk
+Project Link: https://github.com/your_username/SimBatt
+🙏 Acknowledgments
+This work is based on the Master's Thesis: Trajectory Simulation With Battery Modeling for Electric Powered Unmanned Aerial Vehicles by Ege Konuk, Old Dominion University.
+UIUC Propeller Database
+XFLR5 Analysis Tool
+Best-README-Template by Othneil Drew
