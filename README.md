@@ -1,6 +1,5 @@
 <div align="center">
-  <img src="https://i.imgur.com/8B1nF8X.png" alt="Logo" width="450">
-  <br/>
+  <h1 align="center">SimBatt</h1>
   <p align="center">
     A modular 5-DOF trajectory solver with advanced battery modeling for electric UAVs.
     <br />
@@ -18,42 +17,10 @@
 
 ## Key Features
 
-<table>
-<tr>
-<td width="25%">
-<p align="center">
-  <img src="https://i.postimg.cc/Yq3CgN5h/gui-icon.png" width="60">
-  <br>
-  <strong>Interactive GUI</strong>
-</p>
-<p align="center">A user-friendly interface to easily set up and run complex analyses without touching the source code.</p>
-</td>
-<td width="25%">
-<p align="center">
-  <img src="https://i.postimg.cc/PfgB5r7F/battery-icon.png" width="60">
-  <br>
-  <strong>Advanced Battery Model</strong>
-</p>
-<p align="center">Utilizes a constant power discharge method that accurately reflects real-world flight conditions.</p>
-</td>
-<td width="25%">
-<p align="center">
-  <img src="https://i.postimg.cc/T3sKjXfR/mission-icon.png" width="60">
-  <br>
-  <strong>Modular Mission Planning</strong>
-</p>
-<p align="center">Define complex flight plans with multiple segments (straight, turn) and control parameters.</p>
-</td>
-<td width="25%">
-<p align="center">
-  <img src="https://i.postimg.cc/SNwKx2S6/plotting-icon.png" width="60">
-  <br>
-  <strong>Comprehensive Plotting</strong>
-</p>
-<p align="center">Automatically generates detailed performance graphs for trajectory, power, SOC, and more.</p>
-</td>
-</tr>
-</table>
+-   **Interactive GUI:** A user-friendly interface to easily set up and run complex analyses without touching the source code.
+-   **Advanced Battery Model:** Utilizes a constant power discharge method that accurately reflects real-world flight conditions.
+-   **Modular Mission Planning:** Define complex flight plans with multiple segments (straight, turn) and control parameters.
+-   **Comprehensive Plotting:** Automatically generates detailed performance graphs for trajectory, power, SOC, and more.
 
 ---
 
@@ -61,10 +28,10 @@
 
 SimBatt streamlines the simulation process into four main stages, from initial setup to final analysis.
 
-| ![Setup](https://i.postimg.cc/vBSRvWq9/setup-icon.png) | ![Mission](https://i.postimg.cc/W1YqM7sB/mission-def-icon.png) | ![Simulation](https://i.postimg.cc/prpS0zV7/sim-core-icon.png) | ![Analysis](https://i.postimg.cc/Qd9yvTfM/analysis-icon.png) |
-| :---: | :---: | :---: | :---: |
-| **1. Setup** | **2. Mission Definition** | **3. Simulation Core** | **4. Analysis** |
-| Configure aircraft dimensions, mass, motor specs, and battery parameters using the interactive GUI. | Define a multi-stage mission profile in the mission table, setting RPM, turn direction, and segment length for each phase. | The 5-DOF solver, using an adaptive Runge-Kutta method, calculates the aircraft's state at each time step. | Visualize the results with automatically generated plots for 3D trajectory, SOC, voltage, current, and aerodynamic coefficients. |
+1.  **Setup:** Configure aircraft dimensions, mass, motor specs, and battery parameters using the interactive GUI.
+2.  **Mission Definition:** Define a multi-stage mission profile in the mission table, setting RPM, turn direction, and segment length for each phase.
+3.  **Simulation Core:** The 5-DOF solver, using an adaptive Runge-Kutta method, calculates the aircraft's state at each time step.
+4.  **Analysis:** Visualize the results with automatically generated plots for 3D trajectory, SOC, voltage, current, and aerodynamic coefficients.
 
 ---
 
@@ -98,11 +65,11 @@ The battery's State of Charge (SOC) is estimated using a constant power discharg
 * Required Toolboxes: Optimization, Simscape
 
 ### Installation
-1. Clone the repo:
-   ```sh
-   git clone [https://github.com/your_username/SimBatt.git](https://github.com/your_username/SimBatt.git)
-   ```
-2. Open MATLAB and navigate to the cloned directory.
+1.  Clone the repo:
+    ```sh
+    git clone [https://github.com/your_username/SimBatt.git](https://github.com/your_username/SimBatt.git)
+    ```
+2.  Open MATLAB and navigate to the cloned directory.
 
 ### Running the Simulation
 1.  Run the main GUI file from the MATLAB command window:
