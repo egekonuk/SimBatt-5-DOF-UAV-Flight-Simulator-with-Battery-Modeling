@@ -22,7 +22,7 @@
 <tr>
 <td width="25%">
 <p align="center">
-  <img src="https://i.imgur.com/gA3d1gJ.png" width="60">
+  <img src="https://i.postimg.cc/Yq3CgN5h/gui-icon.png" width="60">
   <br>
   <strong>Interactive GUI</strong>
 </p>
@@ -30,7 +30,7 @@
 </td>
 <td width="25%">
 <p align="center">
-  <img src="https://i.imgur.com/k2sPZ5R.png" width="60">
+  <img src="https://i.postimg.cc/PfgB5r7F/battery-icon.png" width="60">
   <br>
   <strong>Advanced Battery Model</strong>
 </p>
@@ -38,7 +38,7 @@
 </td>
 <td width="25%">
 <p align="center">
-  <img src="https://i.imgur.com/zV8QjBq.png" width="60">
+  <img src="https://i.postimg.cc/T3sKjXfR/mission-icon.png" width="60">
   <br>
   <strong>Modular Mission Planning</strong>
 </p>
@@ -46,7 +46,7 @@
 </td>
 <td width="25%">
 <p align="center">
-  <img src="https://i.imgur.com/yFkYx9R.png" width="60">
+  <img src="https://i.postimg.cc/SNwKx2S6/plotting-icon.png" width="60">
   <br>
   <strong>Comprehensive Plotting</strong>
 </p>
@@ -61,7 +61,7 @@
 
 SimBatt streamlines the simulation process into four main stages, from initial setup to final analysis.
 
-| ![Setup](https://i.imgur.com/mYl1bmy.png) | ![Mission](https://i.imgur.com/UoVlX1j.png) | ![Simulation](https://i.imgur.com/8Qk3E1t.png) | ![Analysis](https://i.imgur.com/nJ2s3oP.png) |
+| ![Setup](https://i.postimg.cc/vBSRvWq9/setup-icon.png) | ![Mission](https://i.postimg.cc/W1YqM7sB/mission-def-icon.png) | ![Simulation](https://i.postimg.cc/prpS0zV7/sim-core-icon.png) | ![Analysis](https://i.postimg.cc/Qd9yvTfM/analysis-icon.png) |
 | :---: | :---: | :---: | :---: |
 | **1. Setup** | **2. Mission Definition** | **3. Simulation Core** | **4. Analysis** |
 | Configure aircraft dimensions, mass, motor specs, and battery parameters using the interactive GUI. | Define a multi-stage mission profile in the mission table, setting RPM, turn direction, and segment length for each phase. | The 5-DOF solver, using an adaptive Runge-Kutta method, calculates the aircraft's state at each time step. | Visualize the results with automatically generated plots for 3D trajectory, SOC, voltage, current, and aerodynamic coefficients. |
