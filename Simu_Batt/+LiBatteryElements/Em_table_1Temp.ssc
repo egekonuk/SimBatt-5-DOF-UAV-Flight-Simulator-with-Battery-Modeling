@@ -1,0 +1,59 @@
+component Em_table_1Temp
+% Em_table_1Temp
+% This block implements the main branch voltage source, capacity, and
+% state of charge (SOC). The defining equations are assumed not to depend
+% on temperature. 
+    
+% Copyright 2012-2017 The MathWorks, Inc.
+    
+    nodes
+        p = foundation.electrical.electrical; % +:left
+        n = foundation.electrical.electrical; % -:right
+    end
+
+    outputs
+        SOC = {1,'1'} %SOC:left
+    end
+    
+    parameters
+        Em_Table = {3.8*ones(5,1),'V'}      % Vector of voltage values, Em
+        SOC_Table = {[0;0.1;0.5;0.9;1],'1'} % Corresponding SOC breakpoints
+        C = {30,'A*hr'}    % Capacity (scalar)
+        Qinit = {0,'A*hr'} % Initial charge deficit
+    end
+    
+    variables(Access=private)
+        i = { 0, 'A' };  % Current
+        v = { 0, 'V' };  % Voltage
+        Qe = {value=Qinit, priority=priority.high}; % Charge deficit
+    end
+    
+    branches
+        i : p.i -> n.i;
+    end
+    
+    equations
+        assert(C > 0)
+        assert(all(Em_Table(:) > 0))
+        assert(all(SOC_Table(:) >= 0))
+        assert(Qinit >= 0)
+        
+        v == p.v - n.v;
+        
+        % Charge deficit calculation, preventing SOC>1
+        if Qe<0 && i>0
+            Qe.der == 0;
+        else
+            Qe.der == -i;
+        end
+        
+        % SOC Equation
+        SOC == 1 - Qe/C;
+        
+        % Electrical equation by table lookup
+        v == tablelookup(SOC_Table,Em_Table,SOC,...
+            interpolation=linear,extrapolation=nearest)
+        
+    end
+    
+end

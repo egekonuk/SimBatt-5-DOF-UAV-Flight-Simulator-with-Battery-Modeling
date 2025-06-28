@@ -1,0 +1,70 @@
+component Em_table
+% Em_table modified
+% This block implements the cell's main branch voltage source, and determines
+% values for capacity (C) and state of charge (SOC). The defining equations
+% depend on cell temperature, T.
+    
+% Copyright 2019a The MathWorks, Inc.
+    
+    nodes
+        p = foundation.electrical.electrical; % +:left
+        n = foundation.electrical.electrical; % -:right
+    end
+
+    inputs
+        T = {293.15,'K'} % T:right
+    end
+    
+    outputs
+        C = {31,'A*hr'} %C:left
+        SOC = {1,'1'}   %SOC:left
+    end
+    
+    parameters
+        C_Table = {[29 30 31],'A*hr'}  % Capacity values at specified temperature breakpoints
+        Em_Table = {3.8*ones(5,3),'V'} % Matrix of voltage values, Em(SOC,T)
+        SOC_Table = {[0;0.1;0.5;0.9;1],'1'} % State of charge (SOC) breakpoints
+        Temp_Table = {[273.15 293.15 313.15],'K'} % Temperature (T) breakpoints
+        Qinit      = {0,'A*hr'}                   % Initial charge deficit
+    end
+    
+    variables(Access=private)
+        i = { 0, 'A' };  % Current
+        v = { 0, 'V' };  % Voltage
+        Qe = {value=Qinit, priority=priority.high}; % Charge deficit
+    end
+    
+    branches
+        i : p.i -> n.i;
+    end
+    
+    equations
+        assert(all(C_Table(:) > 0))
+        assert(all(Em_Table(:) > 0))
+        assert(all(SOC_Table(:) >= 0))
+        assert(all(Temp_Table(:) >= 0))
+        assert(Qinit >= 0)
+        
+        v == p.v - n.v;
+        
+        % Charge deficit calculation, preventing SOC>1
+        if Qe<0 && i>0
+            Qe.der == 0;
+        else
+            Qe.der == -i;
+        end
+        
+        % Perform the capacity table lookup
+        C == tablelookup(Temp_Table,C_Table,T,...
+            interpolation=linear,extrapolation=nearest)
+        
+        % SOC Equation
+        SOC == 1 - Qe/C;
+        
+        % Electrical equation by table lookup
+        v == tablelookup(SOC_Table,Temp_Table,Em_Table,SOC,T,...
+            interpolation=linear,extrapolation=nearest)
+        
+    end
+    
+end

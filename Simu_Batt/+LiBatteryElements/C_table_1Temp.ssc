@@ -1,0 +1,47 @@
+component C_table_1Temp
+% C_table_1Temp
+% Models a capacitor where the capacitance value (C) depends on an external
+% physical signal input SOC. It is assumed that the capacitance value is
+% slowly varying with time, and hence the equation i = C*dv/dt holds.
+    
+% Copyright 2012-2017 The MathWorks, Inc.
+    
+    nodes
+        p = foundation.electrical.electrical; % +:left
+        n = foundation.electrical.electrical; % -:right
+    end
+
+    inputs
+        SOC = {1,'1'}; %SOC:left
+    end
+    
+    parameters
+        C_Table   = {ones(5,1),'F'}         % Vector of capacitance values
+        SOC_Table = {[0;0.1;0.5;0.9;1],'1'} % Corresponding SOC breakpoints
+        v0        = {0,'V'};                % Initial voltage across capacitor
+    end
+    
+    variables(Access=private)
+        i = { 0, 'A' }; % Current
+        v = {value=v0, priority=priority.high}; % Voltage
+    end
+    
+    branches
+        i : p.i -> n.i;
+    end
+    
+    equations
+        assert(all(C_Table(:) > 0))
+        assert(all(SOC_Table(:) >= 0))
+        v == p.v - n.v;
+        let
+            % Perform the table lookup
+            C = tablelookup(SOC_Table,C_Table,SOC,...
+                interpolation=linear,extrapolation=nearest)
+        in
+            % Electrical equation
+            i == C * v.der;
+        end
+    end
+    
+end
