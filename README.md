@@ -3,9 +3,9 @@
   <p align="center">
     A modular 5-DOF trajectory solver with advanced battery modeling for electric UAVs.
     <br />
-    <a href="https://github.com/your_username/SimBatt/issues">Report Bug</a>
+    <a href="https://github.com/egekonuk/SimBatt/issues">Report Bug</a>
     ·
-    <a href="https://github.com/your_username/SimBatt/issues">Request Feature</a>
+    <a href="https://github.com/egekonuk/SimBatt/issues">Request Feature</a>
   </p>
 </div>
 
@@ -74,7 +74,7 @@ If you use this project in your research, please cite the underlying thesis:
 ### Installation
 1.  Clone the repo:
     ```sh
-    git clone [https://github.com/your_username/SimBatt.git](https://github.com/your_username/SimBatt.git)
+    git clone [https://github.com/egekonuk/SimBatt.git](https://github.com/egekonuk/SimBatt.git)
     ```
 2.  Open MATLAB and navigate to the cloned directory.
 
