@@ -9,7 +9,7 @@
   </p>
 </div>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![MATLAB](https://img.shields.io/badge/MATLAB-R2020a%2B-orange)](https://www.mathworks.com/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![DOI](https://img.shields.io/badge/Cite-10.25777/15bx--re63-brightgreen.svg)](https://doi.org/10.25777/15bx-re63) [![MATLAB](https://img.shields.io/badge/MATLAB-R2020a%2B-orange)](https://www.mathworks.com/)
 
 ---
 
@@ -56,6 +56,13 @@ The battery's State of Charge (SOC) is estimated using a constant power discharg
     $$V I^n(\text{SOC}) = \frac{a+c\cdot\text{SOC}+e\cdot\text{SOC}^2}{1+b\cdot\text{SOC}+d\cdot\text{SOC}^2+f\cdot\text{SOC}^3}$$
 
 ---
+## Citing SimBatt
+
+If you use this project in your research, please cite the underlying thesis:
+
+> Konuk, E. (2020). *Trajectory Simulation With Battery Modeling for Electric Powered Unmanned Aerial Vehicles* (Master's thesis, Old Dominion University, Norfolk, VA). DOI: 10.25777/15bx-re63
+
+---
 
 ## Getting Started
 
@@ -78,3 +85,9 @@ The battery's State of Charge (SOC) is estimated using a constant power discharg
     ```
 2.  Use the interface to configure all parameters and mission details.
 3.  Click **Run Simulation** to begin the analysis and view the results.
+
+---
+
+## License
+
+This project is licensed under the GNU General Public License v3.0. See the `LICENSE.md` file for more details.
