@@ -1,226 +1,113 @@
-📖 Table of Contents
-About The Project
-
-Key Features
-
-Methodology
-
-Getting Started
-
-Usage
-
-Roadmap
-
-Contributing
-
-License
-
-Contact
-
-Acknowledgments
-
-✈️ About The Project
-SimBatt is a comprehensive MATLAB-based simulation tool for analyzing the flight trajectory of electric-powered Unmanned Aerial Vehicles (UAVs). This tool is a direct result of my M.Sc. research in Aerospace Engineering at Old Dominion University, where my work specialized in developing reduced-order aerodynamic and power models for electric aircraft.
-
-I believe in the power of simplicity in making complex aerodynamic problems digestible for practical use. With SimBatt, my goal was to embody this approach by creating a tool with a very gentle learning curve. I wanted it to be powerful enough for detailed research yet intuitive enough to become a go-to utility in any engineer's or enthusiast's toolkit. I hope it aids you in your own design projects, learning, and discovery :)
-
-Built With:
-✨ Key Features
-Interactive GUI: A user-friendly graphical interface to easily set up and run complex analyses without modifying code.
-
-5-DOF Flight Simulation: A robust framework for trajectory analysis, including takeoff, climb, cruise, turning, and landing phases.
-
-Advanced Battery Modeling: Utilizes a constant power discharge method that accurately reflects real-world flight conditions, validated against an experimental Simulink model.
-
-Modular Mission Planning: Define complex flight plans with multiple segments (straight, turn) and control parameters.
-
-Detailed Aerodynamic Model: Incorporates a component-based drag buildup model, utilizing data from XFLR5 and the UIUC Propeller Database.
-
-Comprehensive Plotting: Automatically generates performance curves (3D Trajectory, SOC, Power, Voltage, Current, Flight Angles, etc.).
-
-🔬 Methodology
-The simulation core is based on a set of well-established flight dynamics and power modeling principles.
-
-Flight Dynamics
-The 5-DOF model assumes coordinated flight (neglecting sideslip) and solves the following primary equations of motion using an adaptive Runge-Kutta-Fehlberg 7(8) solver.
-
-Velocity Derivative ( 
-V
-˙
- ):
-
-
-V
-˙
- = 
-m
-1
-​
- [Tcosα−D]−gsinγ
-Heading Angle Derivative ( 
-β
-˙
-​
- ):
-
-
-β
-˙
-​
- = 
-mV
-1
-​
- [Tsinα+L] 
-cosγ
-sinμ
-​
- 
-Flight Path Angle Derivative ( 
-γ
-˙
-​
- ):
-
-
-γ
-˙
-​
- = 
-mV
-1
-​
- [Tsinα+L]cosμ− 
-V
-g
-​
- cosγ
-Takeoff Velocity Derivative:
-
-
-V
-˙
- = 
-W
-g
-​
- [T−D−ξ(Wcosγ−L)−Wsinγ]
-Where:
-
-T: Thrust, D: Drag, L: Lift, W: Weight
-
-α: Angle of Attack, γ: Flight Path Angle, μ: Bank Angle
-
-m: Mass, g: Gravity, ξ: Runway friction coefficient
-
-Battery Modeling
-The battery's State of Charge (SOC) and terminal voltage are estimated using a constant power discharge model inspired by the work of Lance Traub. This method is ideal for aircraft where power output remains relatively stable during cruise.
-
-Curve Collapse: Multiple constant-current discharge curves are "collapsed" into a single characteristic curve by finding an optimal exponent, n.
-
-
-I 
-n
- V=Constant
-Model Fitting: This collapsed curve is fitted to a rational polynomial function of SOC.
-
-
-VI 
-n
- (SOC)= 
-1+b⋅SOC+d⋅SOC 
-2
- +f⋅SOC 
-3
- 
-a+c⋅SOC+e⋅SOC 
-2
- 
-​
- 
-Iterative Solution: During simulation, the voltage, current, and SOC are solved iteratively at each time step based on the power required by the propulsion system.
-
-🚀 Getting Started
-To get a local copy up and running, follow these simple steps.
-
-Prerequisites
-MATLAB (R2020a or newer is recommended)
-
-Simulink
-
-Required Toolboxes:
-
-Optimization Toolbox
-
-Simscape
-
-Installation
-Clone the repository:
-
-git clone https://github.com/your_username/SimBatt.git
-
-Navigate to the project directory in MATLAB and add it to the path.
-
-🎮 Usage
-Open the project in MATLAB.
-
-Run the main GUI file:
-
-FlightSimGUI
-
-The Simulation Parameters window will open. Use the tabs to configure the simulation:
-
-General & Dimensions: Set the aircraft's physical properties.
-
-Battery & Motor: Define the battery and motor characteristics.
-
-Simulation: Configure initial conditions and solver settings.
-
-Config & Mission: Select a propeller, set flight configuration, and define the mission profile.
-
-Click the Run Simulation button to start.
-
-Results, including the 3D trajectory and performance plots, will be displayed in the Simulation Results panel.
-
-🗺️ Roadmap
-[ ] Upgrade to 6-DOF Model: Incorporate sideslip and yaw dynamics.
-
-[ ] Advanced Control Systems: Implement more sophisticated autopilot logic.
-
-[ ] Thermal Battery Model: Add temperature effects to the battery simulation.
-
-[ ] Full Flight Test Validation: Compare simulation results against data from a fully instrumented flight test.
-
-See the open issues for a full list of proposed features and known issues.
-
-🙌 Contributing
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-
-Fork the Project
-
-Create your Feature Branch (git checkout -b feature/AmazingFeature)
-
-Commit your Changes (git commit -m 'Add some AmazingFeature')
-
-Push to the Branch (git push origin feature/AmazingFeature)
-
-Open a Pull Request
-
-📜 License
-Distributed under the MIT License. See LICENSE.txt for more information.
-
-📬 Contact
-Ege Konuk - egekonuk@gmail.com
-
-Project Link: https://github.com/your_username/SimBatt
-
-🙏 Acknowledgments
-This work is based on the Master's Thesis: Trajectory Simulation With Battery Modeling for Electric Powered Unmanned Aerial Vehicles by Ege Konuk, Old Dominion University.
-
-UIUC Propeller Database
-
-XFLR5 Analysis Tool
-
-Best-README-Template by Othneil Drew
+<div align="center">
+  <img src="https://i.imgur.com/8B1nF8X.png" alt="Logo" width="450">
+  <br/>
+  <p align="center">
+    A modular 5-DOF trajectory solver with advanced battery modeling for electric UAVs.
+    <br />
+    <a href="https://github.com/your_username/SimBatt/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/your_username/SimBatt/issues">Request Feature</a>
+  </p>
+</div>
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![MATLAB](https://img.shields.io/badge/MATLAB-R2020a%2B-orange)](https://www.mathworks.com/)
+
+---
+
+**SimBatt** is a MATLAB-based tool for simulating the flight trajectories of electric-powered Unmanned Aerial Vehicles (UAVs). It combines a 5-DOF flight dynamics model with a detailed battery performance module, making it ideal for mission planning, performance analysis, and endurance estimation for fixed-wing electric aircraft.
+
+## Key Features
+
+<table>
+<tr>
+<td width="25%">
+<p align="center">
+  <img src="https://i.imgur.com/gA3d1gJ.png" width="60">
+  <br>
+  <strong>Interactive GUI</strong>
+</p>
+<p align="center">A user-friendly interface to easily set up and run complex analyses without touching the source code.</p>
+</td>
+<td width="25%">
+<p align="center">
+  <img src="https://i.imgur.com/k2sPZ5R.png" width="60">
+  <br>
+  <strong>Advanced Battery Model</strong>
+</p>
+<p align="center">Utilizes a constant power discharge method that accurately reflects real-world flight conditions.</p>
+</td>
+<td width="25%">
+<p align="center">
+  <img src="https://i.imgur.com/zV8QjBq.png" width="60">
+  <br>
+  <strong>Modular Mission Planning</strong>
+</p>
+<p align="center">Define complex flight plans with multiple segments (straight, turn) and control parameters.</p>
+</td>
+<td width="25%">
+<p align="center">
+  <img src="https://i.imgur.com/yFkYx9R.png" width="60">
+  <br>
+  <strong>Comprehensive Plotting</strong>
+</p>
+<p align="center">Automatically generates detailed performance graphs for trajectory, power, SOC, and more.</p>
+</td>
+</tr>
+</table>
+
+---
+
+## How It Works
+
+SimBatt streamlines the simulation process into four main stages, from initial setup to final analysis.
+
+| ![Setup](https://i.imgur.com/mYl1bmy.png) | ![Mission](https://i.imgur.com/UoVlX1j.png) | ![Simulation](https://i.imgur.com/8Qk3E1t.png) | ![Analysis](https://i.imgur.com/nJ2s3oP.png) |
+| :---: | :---: | :---: | :---: |
+| **1. Setup** | **2. Mission Definition** | **3. Simulation Core** | **4. Analysis** |
+| Configure aircraft dimensions, mass, motor specs, and battery parameters using the interactive GUI. | Define a multi-stage mission profile in the mission table, setting RPM, turn direction, and segment length for each phase. | The 5-DOF solver, using an adaptive Runge-Kutta method, calculates the aircraft's state at each time step. | Visualize the results with automatically generated plots for 3D trajectory, SOC, voltage, current, and aerodynamic coefficients. |
+
+---
+
+## Methodology Spotlight
+
+#### Flight Dynamics
+The 5-DOF model solves the primary equations of motion, assuming coordinated flight:
+
+* **Velocity Derivative ($\dot{V}$):**
+    $$\dot{V} = \frac{1}{m}[T\cos\alpha - D] - g\sin\gamma$$
+* **Heading Angle Derivative ($\dot{\beta}$):**
+    $$\dot{\beta} = \frac{1}{mV}[T\sin\alpha + L]\frac{\sin\mu}{\cos\gamma}$$
+* **Flight Path Angle Derivative ($\dot{\gamma}$):**
+    $$\dot{\gamma} = \frac{1}{mV}[T\sin\alpha + L]\cos\mu - \frac{g}{V}\cos\gamma$$
+
+#### Battery Modeling
+The battery's State of Charge (SOC) is estimated using a constant power discharge model, which is ideal for aircraft where power output remains stable during cruise.
+
+1.  **Curve Collapse:** Multiple constant-current discharge curves are "collapsed" into a single characteristic curve by finding an optimal exponent, **n**.
+    $$I^n V = \text{Constant}$$
+2.  **Model Fitting:** This collapsed curve is fitted to a rational polynomial function of SOC.
+    $$V I^n(\text{SOC}) = \frac{a+c\cdot\text{SOC}+e\cdot\text{SOC}^2}{1+b\cdot\text{SOC}+d\cdot\text{SOC}^2+f\cdot\text{SOC}^3}$$
+
+---
+
+## Getting Started
+
+### Prerequisites
+* MATLAB (R2020a or newer)
+* Simulink
+* Required Toolboxes: Optimization, Simscape
+
+### Installation
+1. Clone the repo:
+   ```sh
+   git clone [https://github.com/your_username/SimBatt.git](https://github.com/your_username/SimBatt.git)
+   ```
+2. Open MATLAB and navigate to the cloned directory.
+
+### Running the Simulation
+1.  Run the main GUI file from the MATLAB command window:
+    ```matlab
+    FlightSimGUI
+    ```
+2.  Use the interface to configure all parameters and mission details.
+3.  Click **Run Simulation** to begin the analysis and view the results.
